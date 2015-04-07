@@ -48,6 +48,6 @@ def TTH(IV,text):
 
 
 IV=(0,0,0,0) # initial Vector
-print(TTH(IV,input('Entrez la chaîne à hacher: ')))
+#print(TTH(IV,input('Entrez la chaine a hacher: ')))
 
 
