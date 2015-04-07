@@ -18,15 +18,17 @@ while (True):
     # Le client recoit son SET et la chaine a hasher et ferme la connexion
     msg = s.recv(1024).decode('UTF-8')
     
+    if (msg == "NOPE plus de travail"):
+    	exit(0)
+    else:
+	    # Le client effectue le travail
+	    msg = msg.split(" ")[1]
+	    res = TTH((0,0,0,0),msg)
 
-    # Le client effectue le travail
-    msg = msg.split(" ")[1]
-    res = TTH((0,0,0,0),msg)
-
-    ## le client envoie le RETURN
-    s.sendall("RETURN " + msg + " " + res + "\n")
-    s.close                     # Close the socket when done
-    time.sleep(5)
+	    ## le client envoie le RETURN
+	    s.sendall("RETURN " + msg + " " + res + "\n")
+	    s.close                     # Close the socket when done
+	    time.sleep(5)
 
 # from http://www.tutorialspoint.com/python/python_networking.htm
 # autre ref: http://docs.python.org/3.1/howto/sockets.html
