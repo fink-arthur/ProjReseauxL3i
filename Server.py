@@ -17,8 +17,9 @@ while True:
    print ('Got connection from', addr)
    msg = c.recv(1024).decode('UTF-8')
    if(msg == "GET\n"):
-      if (random.randint(0,5) == 2):
+      if (random.randint(0,2) == 2):
          c.sendall("NOPE " + "plus de travail\n")
+         print("Nope envoier")
       else:
          c.sendall("SET " + "AYHGD\n")
          print("GET envoyer")
