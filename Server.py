@@ -5,14 +5,13 @@ import random
 from thread import start_new_thread
 from TTH import TTH
 import sys, getopt
-
-compteur = 0
+from baseDeDonnee import *
 
 def initDict(chemin) :
   with open(chemin) as ins:
     array = []
     for line in ins:
-        array.append(line)
+        array.append(line.rstrip())    
   return array
 
 def boucleinterne(mot):
@@ -30,17 +29,15 @@ def inputthread():
 
 
 def clientthread(c):
-  global compteur
   while True:
      msg = c.recv(1024).decode('UTF-8')
      if(msg == "GET\n"):
-         c.sendall("SET " + liste[compteur] + "\n")
-         compteur += 1
+         c.sendall("SET " + rechercheTravail() + "\n")
          #print("GET envoyer")
          msg = c.recv(1024).decode('UTF-8')
          if (msg[:6] == "RETURN"):
-            #print(msg)
-            pass
+            print(msg)
+           ## pass
 
 
 if __name__ == "__main__":
@@ -69,8 +66,14 @@ if __name__ == "__main__":
   s.bind((host, port))        # Bind to the port
   
 
+  initTable()
   liste = initDict('dict.txt')
   # Ecoute sur le socket
+ 
+  remplissage(liste)
+  
+  readTable()
+  
   start_new_thread(inputthread,())
   s.listen(5)                 # Now wait for client connection.
   while (True):
