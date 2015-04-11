@@ -30,7 +30,7 @@ def recherche(tth):
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor() 
-        cur.execute("SELECT tth FROM Rainbow WHERE tth = ?;",(tth,))
+        cur.execute("SELECT tth FROM Rainbow WHERE tth = ?;",(tth,))  
         return cur.fetchall()
 
 def rechercheTravail():
@@ -43,8 +43,10 @@ def rechercheTravail():
 def returnTravail(name, tth):
     con = lite.connect('rainbowtable.db')
     with con:
-        cur = con.cursor() 
-        cur.execute("UPDATE Rainbow SET tth=? WHERE name=?;",(tth,name))
+        cur = con.cursor()
+        cur.execute("UPDATE Rainbow SET tth=? WHERE name=?",(tth,name))
+        con.commit
+        print(cur.rowcount)
         
     
     
