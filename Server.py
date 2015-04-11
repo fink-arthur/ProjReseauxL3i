@@ -4,12 +4,8 @@ import socket               # Import socket module
 import random
 from thread import start_new_thread
 from TTH import TTH
+import sys, getopt
 
-# Mise en place du serveur
-s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
-host = socket.gethostname() # Get local machine name
-port = 2048                # Reserve a port for your service.
-s.bind((host, port))        # Bind to the port
 compteur = 0
 
 def initDict(chemin) :
@@ -48,6 +44,31 @@ def clientthread(c):
 
 
 if __name__ == "__main__":
+
+  port = 2048                # Reserve a port for your service.
+
+  try:
+      opts, args = getopt.getopt(sys.argv[1:],"hp:c:f:",["parg=","carg=","farg="])
+  except getopt.GetoptError:
+      print 'Server.py -p <numeroPort> -c <nbrMaxConnection> -f <fichierDictionnaire>'
+      sys.exit(2)
+  for opt, arg in opts:
+    if opt == '-h':
+      print 'Server.py -p <numeroPort> -c <nbrMaxConnection> -f <fichierDictionnaire>'
+      sys.exit()
+    elif opt in ("-p", "--parg"):
+      port = arg
+    elif opt in ("-c", "--carg"):
+      pass
+    elif opt in ("-f", "--farg"):
+      pass
+
+  # Mise en place du serveur
+  s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
+  host = socket.gethostname() # Get local machine name
+  s.bind((host, port))        # Bind to the port
+  
+
   liste = initDict('dict.txt')
   # Ecoute sur le socket
   start_new_thread(inputthread,())
