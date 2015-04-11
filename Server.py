@@ -36,6 +36,8 @@ def clientthread(c):
          #print("GET envoyer")
          msg = c.recv(1024).decode('UTF-8')
          if (msg[:6] == "RETURN"):
+            acc = msg.split(" ")
+            returnTravail(acc[2].rstrip(),acc[1])
             print(msg)
            ## pass
 

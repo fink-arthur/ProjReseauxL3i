@@ -12,7 +12,7 @@ def initTable():
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor()    
-    #    cur.execute("DROP TABLE Rainbow;")
+        cur.execute("DROP TABLE Rainbow;")
         cur.execute("CREATE TABLE Rainbow(name TEXT, tth TEXT,time LONG)")
     #    cur.execute("INSERT INTO Rainbow(name) VALUES ('azaz');")
 
@@ -39,6 +39,15 @@ def rechercheTravail():
         cur = con.cursor() 
         cur.execute("SELECT name FROM Rainbow WHERE tth IS NULL;")
         return cur.fetchone()[0]
+        
+def returnTravail(name, tth):
+    con = lite.connect('rainbowtable.db')
+    with con:
+        cur = con.cursor() 
+        cur.execute("UPDATE Rainbow SET tth=? WHERE name=?;",(tth,name))
+        
+    
+    
         
 
 
