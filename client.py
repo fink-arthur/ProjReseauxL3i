@@ -24,8 +24,7 @@ while(True):
         exit(0)
     else:
 	    # Le client effectue le travail
-        #print(msg)
-        msg = msg.split(" ")[1]
+        msg = msg.rstrip().split(" ")[1]
         res = TTH((0,0,0,0),msg)
 	    ## le client envoie le RETURN
         s.sendall("RETURN " + msg + " " + res + "\n")

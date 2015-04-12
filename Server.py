@@ -27,20 +27,16 @@ def inputthread():
     res = TTH((0,0,0,0),string)
     print(res)
 
-
 def clientthread(c):
   while True:
      msg = c.recv(1024).decode('UTF-8')
      if(msg == "GET\n"):
          c.sendall("SET " + rechercheTravail() + "\n")
-         #print("GET envoyer")
          msg = c.recv(1024).decode('UTF-8')
          if (msg[:6] == "RETURN"):
-            acc = msg.split(" ")
-            returnTravail(acc[2].rstrip(),acc[1])
+            acc = msg.rstrip().split(" ")
+            returnTravail(acc[1], acc[2])
             print(msg)
-           ## pass
-
 
 if __name__ == "__main__":
 
@@ -74,7 +70,7 @@ if __name__ == "__main__":
  
   remplissage(liste)
   
-  readTable()
+  #readTable()
   
   start_new_thread(inputthread,())
   s.listen(5)                 # Now wait for client connection.

@@ -6,20 +6,21 @@ import sys
 from Server import initDict
 
 
-
-
 def initTable():
+    """
+    Fonction qui initialise la table de la BDD
+    """
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor()    
         cur.execute("DROP TABLE Rainbow;")
         cur.execute("CREATE TABLE Rainbow(name TEXT, tth TEXT,time LONG)")
-    #    cur.execute("INSERT INTO Rainbow(name) VALUES ('azaz');")
 
-    
-
-
-def remplissage(uneListe) :
+def remplissage(uneListe):
+    """
+    Fonction qui remplit la table en initialisant seulement le champ name, 
+    pour chaque element de la liste
+    """
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor() 
@@ -27,13 +28,19 @@ def remplissage(uneListe) :
             cur.execute("INSERT INTO Rainbow(name) VALUES (?);",(i,))
             
 def recherche(tth):
+    """
+    Fontion qui recherche dans la BDD tous les mots qui ont le meme tth que celui donné en argument
+    """
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor() 
-        cur.execute("SELECT tth FROM Rainbow WHERE tth = ?;",(tth,))  
+        cur.execute("SELECT name FROM Rainbow WHERE tth = ?;",(tth,))  
         return cur.fetchall()
 
 def rechercheTravail():
+    """
+    Fonction qui recherche le premier mot qui n'as pas encore été traité
+    """
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor() 
@@ -41,21 +48,20 @@ def rechercheTravail():
         return cur.fetchone()[0]
         
 def returnTravail(name, tth):
+    """
+    Fonction qui met a jour la BDD avec la valeur du TTH du mot
+    """
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor()
-        cur.execute("UPDATE Rainbow SET tth=? WHERE name=?",(tth,name))
-        con.commit
+        cur.execute("UPDATE Rainbow SET tth=? WHERE name=?;",(tth,name))
+        con.commit()
         print(cur.rowcount)
-        
-    
-    
-        
-
-
-
-    
+           
 def readTable():
+    """
+    Fonction qui affiche la table de la BDD
+    """
     con = lite.connect('rainbowtable.db')
     with con:    
         cur = con.cursor()    
