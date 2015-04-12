@@ -28,14 +28,21 @@ def inputthread():
     print(res)
 
 def clientthread(c):
+  carryover = ""
   while True:
-     msg = c.recv(1024).decode('UTF-8')
+     if (carryover == ""):
+       msg = c.recv(1024).decode('UTF-8')
+     else:
+       msg = carryover + "\n"
+       carryover = ""
      if(msg == "GET\n"):
          c.sendall("SET " + rechercheTravail() + "\n")
          msg = c.recv(1024).decode('UTF-8')
          if (msg[:6] == "RETURN"):
             acc = msg.rstrip().split(" ")
             returnTravail(acc[1], acc[2])
+            if (len(msg.split("\n")) == 3):
+              carryover = msg.split("\n")[1]
             print(msg)
 
 if __name__ == "__main__":

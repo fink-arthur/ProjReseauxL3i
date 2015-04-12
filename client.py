@@ -28,6 +28,6 @@ while(True):
         res = TTH((0,0,0,0),msg)
 	    ## le client envoie le RETURN
         s.sendall("RETURN " + msg + " " + res + "\n")
-        time.sleep(0.0005)
+        #time.sleep(0.0005)
     else:
         print("Il y a une couille")
