@@ -56,7 +56,6 @@ def returnTravail(name, tth):
         cur = con.cursor()
         cur.execute("UPDATE Rainbow SET tth=? WHERE name=?;",(tth,name))
         con.commit()
-        print(cur.rowcount)
            
 def readTable():
     """

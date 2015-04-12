@@ -22,9 +22,12 @@ while(True):
     elif (msg == "NOPE 2\n"):
         s.close()
         exit(0)
-    else:
+    elif (msg[:3] == "SET"):
 	    # Le client effectue le travail
         msg = msg.rstrip().split(" ")[1]
         res = TTH((0,0,0,0),msg)
 	    ## le client envoie le RETURN
         s.sendall("RETURN " + msg + " " + res + "\n")
+        time.sleep(0.0005)
+    else:
+        print("Il y a une couille")
