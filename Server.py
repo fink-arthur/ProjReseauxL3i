@@ -65,7 +65,7 @@ if __name__ == "__main__":
     elif opt in ("-p", "--parg"):
       port = int(arg)
     elif opt in ("-c", "--carg"):
-      nbClient=int(arg)
+      nbClient=arg
     elif opt in ("-f", "--farg"):
       liste = initDict(arg)
 

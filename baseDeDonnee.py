@@ -43,7 +43,10 @@ def rechercheTravail():
     with con:
         cur = con.cursor() 
         cur.execute("SELECT name FROM Rainbow WHERE tth IS NULL;")
-        return cur.fetchone()[0]
+        return cur.fetchall()
+
+def nextTravail(iterable):
+    return iterable.next()
         
 def returnTravail(name, tth):
     """
