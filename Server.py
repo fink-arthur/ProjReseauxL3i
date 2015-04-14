@@ -54,6 +54,8 @@ if __name__ == "__main__":
   except getopt.GetoptError:
       print 'Server.py -p <numeroPort> -c <nbrMaxConnection> -f <fichierDictionnaire>'
       sys.exit(2)
+  	     
+
   for opt, arg in opts:
     if opt == '-h':
       print 'Server.py -p <numeroPort> -c <nbrMaxConnection> -f <fichierDictionnaire>'
@@ -82,6 +84,11 @@ if __name__ == "__main__":
   start_new_thread(inputthread,())
   s.listen(5)                 # Now wait for client connection.
   while (True):
-    c, addr = s.accept()     # Establish connection with client.
-    print ('Got connection from', addr)
-    start_new_thread(clientthread, (c,)) # dedicasse a Julien
+  	try:
+		c, addr = s.accept()     # Establish connection with client.
+		print ('Got connection from', addr)
+		start_new_thread(clientthread, (c,)) # dedicasse a Julien	
+	except KeyboardInterrupt:
+		s.close()
+		sys.exit()
+    
