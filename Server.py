@@ -40,6 +40,7 @@ def clientthread(c):
          msg = c.recv(1024).decode('UTF-8')
          if (msg[:6] == "RETURN"):
             acc = msg.rstrip().split(" ")
+            print(port)
             returnTravail(acc[1], acc[2])
             if (len(msg.split("\n")) == 3):
               carryover = msg.split("\n")[1]
@@ -48,7 +49,8 @@ def clientthread(c):
 if __name__ == "__main__":
 
   port = 2048                # Reserve a port for your service.
-
+  nbClient=5                  # number of max clients
+  liste = initDict('dict.txt')
   try:
       opts, args = getopt.getopt(sys.argv[1:],"hp:c:f:",["parg=","carg=","farg="])
   except getopt.GetoptError:
@@ -61,11 +63,11 @@ if __name__ == "__main__":
       print 'Server.py -p <numeroPort> -c <nbrMaxConnection> -f <fichierDictionnaire>'
       sys.exit()
     elif opt in ("-p", "--parg"):
-      port = arg
+      port = int(arg)
     elif opt in ("-c", "--carg"):
-      pass
+      nbClient=arg
     elif opt in ("-f", "--farg"):
-      pass
+      liste = initDict(arg)
 
   # Mise en place du serveur
   s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
@@ -74,7 +76,7 @@ if __name__ == "__main__":
   
 
   initTable()
-  liste = initDict('dict.txt')
+  
   # Ecoute sur le socket
  
   remplissage(liste)
@@ -82,7 +84,7 @@ if __name__ == "__main__":
   #readTable()
   
   start_new_thread(inputthread,())
-  s.listen(5)                 # Now wait for client connection.
+  s.listen(nbClient)                 # Now wait for client connection.
   while (True):
   	try:
 		c, addr = s.accept()     # Establish connection with client.

@@ -7,7 +7,7 @@ from TTH import TTH
 # Connection au serveur
 s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
 host = socket.gethostname() # Get local machine name
-port = 2048                # Reserve a port for your service.
+port = 2000          # Reserve a port for your service.
 s.connect((host, port))
 
 while(True):
