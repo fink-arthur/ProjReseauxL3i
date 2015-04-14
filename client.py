@@ -4,10 +4,31 @@ import socket               # Import socket module
 import time
 from TTH import TTH
 
+
+port = 2048                # Reserve a port for your service.
+nbClient=5                  # number of max clients
+host = socket.gethostname() # Get local machine name
+  try:
+      opts, args = getopt.getopt(sys.argv[1:],"hp:",["parg=","harg"])
+  except getopt.GetoptError:
+      print 'Server.py -p <numeroPort> -h <host>'
+      sys.exit(2)
+  	     
+
+  for opt, arg in opts:
+    if opt == '-h':
+      print 'Server.py -p <numeroPort> -h: <host>'
+      sys.exit()
+    elif opt in ("-p", "--parg"):
+      port = int(arg)
+    elif opt in ("-h", "--carg"):
+        host=arg
+    
+
+port = 2048       
 # Connection au serveur
 s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
 host = socket.gethostname() # Get local machine name
-port = 2000          # Reserve a port for your service.
 s.connect((host, port))
 
 while(True):
