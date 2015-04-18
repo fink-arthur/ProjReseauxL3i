@@ -20,12 +20,25 @@ def boucleinterne(mot):
       motinter = mot
       liste.append(mot + chr(96 + j))
    return liste
-
+       
+def DIC():
+	liste = []
+	for i in range(26):
+		for j in range(26):
+			for k in range(26):
+				for l in range(26):
+					liste.append(chr(i+97)+chr(j+97)+chr(k+97)+chr(l+97))
+	return liste
+                      
 def inputthread():
    while True:
       string = raw_input("Entrer une chaine de caracteres: ")
       res = TTH((0,0,0,0),string)
-      print(res)
+      rechercheCollision("COLLISION"+res)
+     
+def rechercheCollision(mot):
+    listeCollision = recherche(motTTH)
+    print(listeCollision)
 
 def clientthread(c):
    global iterateur
