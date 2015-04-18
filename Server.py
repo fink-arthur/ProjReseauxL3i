@@ -187,8 +187,13 @@ if __name__ == "__main__":
       else:
          remplissage(liste)
    
-   iterateur = rechercheTravail().__iter__()
-  
+   
+   recherche = rechercheTravail()
+   if (len(recherche) == 0):
+      iterateur = None
+   else:
+      iterateur = recherche.__iter__()
+      
 
    ########################################
    #                                      #
