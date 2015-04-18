@@ -22,23 +22,23 @@ def boucleinterne(mot):
    return liste
        
 def DIC():
-	liste = []
-	for i in range(26):
-		for j in range(26):
-			for k in range(26):
-				for l in range(26):
-					liste.append(chr(i+97)+chr(j+97)+chr(k+97)+chr(l+97))
-	return liste
+    liste = []
+    for i in range(26):
+	for j in range(26):
+		for k in range(26):
+			for l in range(26):
+				liste.append(chr(i+97)+chr(j+97)+chr(k+97)+chr(l+97))
+    return liste
                       
 def inputthread():
    while True:
       string = raw_input("Entrer une chaine de caracteres: ")
       res = TTH((0,0,0,0),string)
-      rechercheCollision("COLLISION"+res)
+      rechercheCollision(res)
      
 def rechercheCollision(mot):
-    listeCollision = recherche(motTTH)
-    print(listeCollision)
+    listeCollision = recherche(mot)
+    print("COLLISION:"+str(listeCollision))
 
 def clientthread(c):
    global iterateur
@@ -60,11 +60,11 @@ def clientthread(c):
          msg = c.recv(1024).decode('UTF-8')
          if (msg[:6] == "RETURN"):
             acc = msg.rstrip().split(" ")
-            print(port)
+           # print(port)
             returnTravail(acc[1], acc[2])
             if (len(msg.split("\n")) == 3):
                carryover = msg.split("\n")[1]
-            print(msg)
+          #  print(msg)
 
 if __name__ == "__main__":
 
