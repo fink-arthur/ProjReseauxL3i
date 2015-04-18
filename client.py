@@ -47,21 +47,24 @@ host = socket.gethostname() # Get local machine name
 s.connect((host, port))
 
 while(True):
-   # Le client envoie GET au serveur
-   s.send("GET\n")
+   try:
+      # Le client envoie GET au serveur
+      s.send("GET\n")
 
-   # Le client recoit son SET et la chaine a hasher
-   msg = s.recv(1024).decode('UTF-8')
-    
-   if (msg == "NOPE 1\n"):
-    	time.sleep(60)
-   elif (msg == "NOPE 2\n"):
-      print(msg)
-      s.close()
+      # Le client recoit son SET et la chaine a hasher
+      msg = s.recv(1024).decode('UTF-8')
+       
+      if (msg == "NOPE 1\n"):
+       	time.sleep(60)
+      elif (msg == "NOPE 2\n"):
+         print(msg)
+         s.close()
+         exit(0)
+      elif (setmessage.match(msg) != None):
+   	   # Le client effectue le travail
+         msg = msg.rstrip().split(" ")[1]
+         res = TTH((0,0,0,0),msg)
+   	   ## le client envoie le RETURN
+         s.send("RETURN " + msg + " " + res + "\n")
+   except:
       exit(0)
-   elif (setmessage.match(msg) != None):
-	   # Le client effectue le travail
-      msg = msg.rstrip().split(" ")[1]
-      res = TTH((0,0,0,0),msg)
-	   ## le client envoie le RETURN
-      s.send("RETURN " + msg + " " + res + "\n")

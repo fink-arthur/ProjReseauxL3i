@@ -3,6 +3,7 @@
 import socket
 import random
 from thread import start_new_thread
+import thread
 from TTH import TTH
 import sys, getopt
 from baseDeDonnee import *
@@ -54,7 +55,7 @@ def clientthread(c):
    carryover = ""
    travail = ""
    ret = re.compile("RETURN [a-z]+ [a-z]+\\n") # On verifie que le message est bien de la bonne forme
-
+   c.settimeout(10)
 
 
    ########################################
@@ -67,7 +68,12 @@ def clientthread(c):
 
       # On regarde si l'envoie du get par le client n'as pas ete trop rapide
       if (carryover == ""):
-         msg = c.recv(1024).decode('UTF-8')
+         try:
+            msg = c.recv(1024).decode('UTF-8')
+            # Si timeout on ferme la connexion
+         except:
+            c.close()
+            thread.exit()
       else:
          msg = carryover + "\n"
          carryover = ""
@@ -83,8 +89,7 @@ def clientthread(c):
             if (len(recherche) == 0): # Plus de travail a faire dans la BDD
                iterateur = None
             iterateur = recherche.__iter__()
-
-
+         
          if (iterateur == None): # On endort le client car plus de travail
             c.sendall("NOPE 1\n")
          else:
@@ -96,7 +101,12 @@ def clientthread(c):
             travail = ""
 
             # On recoit normalement le RETURN du client
-            msg = c.recv(1024).decode('UTF-8')
+            try:
+               msg = c.recv(1024).decode('UTF-8')
+            # Si timeout on ferme la connexion
+            except:
+               c.close()
+               thread.exit()
             if (ret.match(msg) != None):
                acc = msg.rstrip().split(" ")
                returnTravail(acc[1], acc[2])
@@ -109,6 +119,7 @@ def clientthread(c):
                c.sendall("NOPE 2\n")
                print(msg)
                c.close()
+               thread.exit()
 
       # Le premier message n'est pas GET mais autre chose
       else :
