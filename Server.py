@@ -38,7 +38,7 @@ def inputthread():
      
 def rechercheCollision(mot):
     listeCollision = recherche(mot)
-    print("COLLISION:"+str(listeCollision))
+    print("COLLISION de "+mot+" :"+str(listeCollision))
 
 def clientthread(c):
    global iterateur
