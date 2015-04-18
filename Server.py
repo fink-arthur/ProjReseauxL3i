@@ -97,7 +97,7 @@ def clientthread(c):
          # On regarde si l'iterateur qui nous donne le travail est vide
          try:
             travail = iterateur.next()
-         except StopIteration:
+         except:
             recherche = rechercheTravail()
             if (len(recherche) == 0): # Plus de travail a faire dans la BDD
                iterateur = None
