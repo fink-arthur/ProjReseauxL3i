@@ -6,6 +6,7 @@ from thread import start_new_thread
 from TTH import TTH
 import sys, getopt
 from baseDeDonnee import *
+import re
 
 def initDict(chemin):
    """
@@ -52,6 +53,8 @@ def clientthread(c):
    global iterateur
    carryover = ""
    travail = ""
+   ret = re.compile("RETURN [a-z]+ [a-z]+\\n") # On verifie que le message est bien de la bonne forme
+
 
 
    ########################################
@@ -94,7 +97,7 @@ def clientthread(c):
 
             # On recoit normalement le RETURN du client
             msg = c.recv(1024).decode('UTF-8')
-            if (msg[:6] == "RETURN"):
+            if (ret.match(msg) != None):
                acc = msg.rstrip().split(" ")
                returnTravail(acc[1], acc[2])
                if (len(msg.split("\n")) == 3):
