@@ -12,7 +12,7 @@ def initTable():
     with con:
         cur = con.cursor()    
         try:
-            cur.execute("CREATE TABLE Rainbow(name TEXT, tth TEXT,time LONG)")
+            cur.execute("CREATE TABLE Rainbow(name TEXT, tth TEXT)")
             return 0
         except:
             return 1
