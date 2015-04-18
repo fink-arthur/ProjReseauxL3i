@@ -1,4 +1,5 @@
 #!/usr/local/bin/python3    # This is server.py file
+# -*- coding: utf-8 -*-
 
 import socket
 import random
@@ -45,8 +46,20 @@ def rechercheCollision(mot):
    Prend un tth et renvoie tous les mots de la BDD avec le meme tth
    """
    listeCollision = recherche(mot)
-   print("COLLISION de "+mot+" :"+str(listeCollision))
-
+   print("COLLISION de "+mot+" :"+parseCollision(listeCollision))
+   
+def parseCollision(L):  ## COLLISION de epir :[(u'abord',), (u'aborda',)]
+    """
+    Methode qui affiche bien la collision
+    """
+    res = ""
+    if (len(L) == 0):
+        return "le travail n'a pas été encore éffectué pour ce mot"
+    else :
+        for i in range (len(L)) :
+            res = L[i][0] + " " +res
+        return res
+          
 def clientthread(c):
    """
    Thread qui va gerer la connection avec un client
