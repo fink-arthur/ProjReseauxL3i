@@ -101,7 +101,8 @@ def clientthread(c):
             recherche = rechercheTravail()
             if (len(recherche) == 0): # Plus de travail a faire dans la BDD
                iterateur = None
-            iterateur = recherche.__iter__()
+            else:
+               iterateur = recherche.__iter__()
          
          if (iterateur == None): # On endort le client car plus de travail
             c.sendall("NOPE 1\n")
@@ -193,7 +194,7 @@ if __name__ == "__main__":
       iterateur = None
    else:
       iterateur = recherche.__iter__()
-      
+
 
    ########################################
    #                                      #
