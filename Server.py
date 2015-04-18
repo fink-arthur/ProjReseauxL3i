@@ -65,6 +65,7 @@ def clientthread(c):
    Thread qui va gerer la connection avec un client
    """
    global iterateur
+   global compteur
    carryover = ""
    travail = ""
    ret = re.compile("RETURN [a-z.-]+ [a-z]+\\n") # On verifie que le message est bien de la bonne forme
@@ -119,6 +120,7 @@ def clientthread(c):
             # Si timeout on ferme la connexion
             except:
                c.close()
+               compteur--
                thread.exit()
             if (ret.match(msg) != None):
                acc = msg.rstrip().split(" ")
@@ -132,6 +134,7 @@ def clientthread(c):
                c.sendall("NOPE 2\n")
                print(msg)
                c.close()
+               compteur--
                thread.exit()
 
       # Le premier message n'est pas GET mais autre chose
@@ -143,7 +146,7 @@ def clientthread(c):
 if __name__ == "__main__":
 
    port = 2048                # Reserve a port for your service.
-   nbClient = 5                  # number of max clients
+   nbClient = 2000000                  # number of max clients
    liste = None
 
    ########################################
@@ -206,13 +209,18 @@ if __name__ == "__main__":
    host = '127.0.0.1'                                       # Get local machine name
    s.bind((host, port))                                     # Bind to the port
   
+   compteur = 0
    start_new_thread(inputthread,())
-   s.listen(nbClient)                  # Now wait for client connection.
+   s.listen(5)                  # Now wait for client connection.
    while (True):
       try:
          c, addr = s.accept()          # Establish connection with client.
          print ('Got connection from', addr)
-         start_new_thread(clientthread, (c,)) # Dedicasse a Julien	
+         compteur++
+         if (compteur >= nbClient):
+            print("Trop de connexions")
+         else:
+            start_new_thread(clientthread, (c,)) # Dedicasse a Julien	
       except KeyboardInterrupt:
          s.close()
          sys.exit()
