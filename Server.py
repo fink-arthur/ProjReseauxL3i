@@ -178,7 +178,7 @@ if __name__ == "__main__":
   
 
    t = initTable()
-  
+
    # Ecoute sur le socket
  
    if (t == 0):
@@ -198,7 +198,7 @@ if __name__ == "__main__":
 
 
    s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)   # Create a socket object
-   host = socket.gethostname()                              # Get local machine name
+   host = '127.0.0.1'                                       # Get local machine name
    s.bind((host, port))                                     # Bind to the port
   
    start_new_thread(inputthread,())

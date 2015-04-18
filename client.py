@@ -7,9 +7,9 @@ import sys, getopt
 import re
 
 
-port = 2048                # Reserve a port for your service.
-nbClient=5                  # number of max clients
-host = socket.gethostname() # Get local machine name
+port = 2048                   # Reserve a port for your service.
+nbClient=5                    # number of max clients
+host = '127.0.0.1'            # Get local machine name
 setmessage = re.compile("SET [a-z.-]+\\n") # LOn regarde si le message est de la bonne forme
 
 
@@ -43,7 +43,6 @@ for opt, arg in opts:
      
 # Connection au serveur
 s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
-host = socket.gethostname() # Get local machine name
 s.connect((host, port))
 
 while(True):
@@ -66,5 +65,6 @@ while(True):
          res = TTH((0,0,0,0),msg)
    	   ## le client envoie le RETURN
          s.send("RETURN " + msg + " " + res + "\n")
+         #time.sleep(0.5) Pour les erreurs du GIL en multi thread
    except:
       exit(0)
