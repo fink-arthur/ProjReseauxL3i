@@ -10,7 +10,7 @@ import re
 port = 2048                # Reserve a port for your service.
 nbClient=5                  # number of max clients
 host = socket.gethostname() # Get local machine name
-setmessage = re.compile("SET [a-z.]+\\n") # LOn regarde si le message est de la bonne forme
+setmessage = re.compile("SET [a-z.-]+\\n") # LOn regarde si le message est de la bonne forme
 
 
 ########################################

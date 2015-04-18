@@ -67,7 +67,7 @@ def clientthread(c):
    global iterateur
    carryover = ""
    travail = ""
-   ret = re.compile("RETURN [a-z.]+ [a-z]+\\n") # On verifie que le message est bien de la bonne forme
+   ret = re.compile("RETURN [a-z.-]+ [a-z]+\\n") # On verifie que le message est bien de la bonne forme
    c.settimeout(10)
 
 
