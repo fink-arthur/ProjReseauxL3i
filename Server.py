@@ -81,7 +81,11 @@ def clientthread(c):
 
       # On regarde si l'envoie du get par le client n'as pas ete trop rapide
       if (carryover == ""):
-         msg = c.recv(1024).decode('UTF-8')
+         try:
+            msg = c.recv(1024).decode('UTF-8')
+            # Si timeout on ferme la connexion
+         except:
+            continue
       else:
          msg = carryover + "\n"
          carryover = ""
