@@ -9,12 +9,19 @@ import sys, getopt
 port = 2048                # Reserve a port for your service.
 nbClient=5                  # number of max clients
 host = socket.gethostname() # Get local machine name
+
+
+########################################
+#                                      #
+#        On gere les options           #
+#                                      #
+########################################
+
 try:
-  opts, args = getopt.getopt(sys.argv[1:],"hp:",["parg=","harg"])
+   opts, args = getopt.getopt(sys.argv[1:],"hp:",["parg=","harg"])
 except getopt.GetoptError:
-  print 'Server.py -p <numeroPort> -h <host>'
-  sys.exit(2)
-	     
+   print 'Server.py -p <numeroPort> -h <host>'
+   sys.exit(2)
 
 for opt, arg in opts:
     if opt == '-h':
@@ -23,33 +30,36 @@ for opt, arg in opts:
     elif opt in ("-p", "--parg"):
       port = int(arg)
     elif opt in ("-h", "--carg"):
-        host=arg
+      host=arg
     
 
-port = 2048       
+########################################
+#                                      #
+#      Mise en place du client         #
+#                                      #
+########################################
+     
 # Connection au serveur
 s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)         # Create a socket object
 host = socket.gethostname() # Get local machine name
 s.connect((host, port))
 
 while(True):
-    # Le client envoie GET au serveur
-    s.sendall("GET\n")
+   # Le client envoie GET au serveur
+   s.send("GET\n")
 
-    # Le client recoit son SET et la chaine a hasher et ferme la connexion
-    msg = s.recv(1024).decode('UTF-8')
+   # Le client recoit son SET et la chaine a hasher et ferme la connexion
+   msg = s.recv(1024).decode('UTF-8')
     
-    if (msg == "NOPE 1\n"):
+   if (msg == "NOPE 1\n"):
     	time.sleep(60)
-    elif (msg == "NOPE 2\n"):
-        s.close()
-        exit(0)
-    elif (msg[:3] == "SET"):
-	    # Le client effectue le travail
-        msg = msg.rstrip().split(" ")[1]
-        res = TTH((0,0,0,0),msg)
-	    ## le client envoie le RETURN
-        s.sendall("RETURN " + msg + " " + res + "\n")
-        #time.sleep(0.0005)
-    else:
-        print("Il y a une couille")
+   elif (msg == "NOPE 2\n"):
+      print(msg)
+      s.close()
+      exit(0)
+   elif (msg[:3] == "SET"):
+	   # Le client effectue le travail
+      msg = msg.rstrip().split(" ")[1]
+      res = TTH((0,0,0,0),msg)
+	   ## le client envoie le RETURN
+      s.send("RETURN " + msg + " " + res + "\n")

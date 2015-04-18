@@ -11,8 +11,12 @@ def initTable():
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor()    
-        cur.execute("DROP TABLE Rainbow;")
-        cur.execute("CREATE TABLE Rainbow(name TEXT, tth TEXT,time LONG)")
+        try:
+            cur.execute("CREATE TABLE Rainbow(name TEXT, tth TEXT,time LONG)")
+            return 0
+        except:
+            return 1
+
 
 def remplissage(uneListe):
     """
@@ -22,8 +26,8 @@ def remplissage(uneListe):
     con = lite.connect('rainbowtable.db')
     with con:
         cur = con.cursor() 
-        for i in uneListe:
-            cur.execute("INSERT INTO Rainbow(name) VALUES (?);",(i,))
+        for i in range(len(uneListe)):
+            cur.execute("INSERT INTO Rainbow(name) VALUES (?);",(uneListe[i],))
             
 def recherche(tth):
     """
@@ -33,7 +37,7 @@ def recherche(tth):
     with con:
         cur = con.cursor() 
         cur.execute("SELECT name FROM Rainbow WHERE tth = ?;",(tth,))  
-        return cur.fetchall()
+    return cur.fetchall()
 
 def rechercheTravail():
     """
@@ -43,10 +47,7 @@ def rechercheTravail():
     with con:
         cur = con.cursor() 
         cur.execute("SELECT name FROM Rainbow WHERE tth IS NULL;")
-        return cur.fetchall()
-
-def nextTravail(iterable):
-    return iterable.next()
+    return cur.fetchall()
         
 def returnTravail(name, tth):
     """
