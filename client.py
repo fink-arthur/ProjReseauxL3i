@@ -31,7 +31,7 @@ for opt, arg in opts:
       sys.exit()
     elif opt in ("-p", "--parg"):
       port = int(arg)
-    elif opt in ("-h", "--carg"):
+    elif opt in ("-h", "--harg"):
       host=arg
     
 

@@ -120,7 +120,7 @@ def clientthread(c):
             # Si timeout on ferme la connexion
             except:
                c.close()
-               compteur--
+               compteur=compteur-compteur
                thread.exit()
             if (ret.match(msg) != None):
                acc = msg.rstrip().split(" ")
@@ -134,7 +134,7 @@ def clientthread(c):
                c.sendall("NOPE 2\n")
                print(msg)
                c.close()
-               compteur--
+               compteur=compteur-compteur
                thread.exit()
 
       # Le premier message n'est pas GET mais autre chose
@@ -216,7 +216,7 @@ if __name__ == "__main__":
       try:
          c, addr = s.accept()          # Establish connection with client.
          print ('Got connection from', addr)
-         compteur++
+         compteur=compteur+compteur
          if (compteur >= nbClient):
             print("Trop de connexions")
          else:
