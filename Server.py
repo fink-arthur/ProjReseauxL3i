@@ -124,7 +124,7 @@ def clientthread(c):
                thread.exit()
             if (ret.match(msg) != None):
                acc = msg.rstrip().split(" ")
-               returnTravail(acc[1], acc[2])
+               baseDeDonnee.returnTravail(acc[1], acc[2])
                if (len(msg.split("\n")) == 3):
                   carryover = msg.split("\n")[1]
                #print(msg)
