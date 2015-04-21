@@ -7,7 +7,7 @@ from thread import start_new_thread
 import thread
 from TTH import TTH
 import sys, getopt
-from baseDeDonnee import *
+import baseDeDonnee
 import re
 
 def initDict(chemin):
@@ -45,7 +45,7 @@ def rechercheCollision(mot):
    """
    Prend un tth et renvoie tous les mots de la BDD avec le meme tth
    """
-   listeCollision = recherche(mot)
+   listeCollision = baseDeDonnee.recherche(mot)
    print("COLLISION de "+mot+" :"+parseCollision(listeCollision))
    
 def parseCollision(L):  ## COLLISION de epir :[(u'abord',), (u'aborda',)]
@@ -98,7 +98,7 @@ def clientthread(c):
          try:
             travail = iterateur.next()
          except:
-            recherche = rechercheTravail()
+            recherche = baseDeDonnee.rechercheTravail()
             if (len(recherche) == 0): # Plus de travail a faire dans la BDD
                iterateur = None
             else:
@@ -180,7 +180,7 @@ if __name__ == "__main__":
    ########################################
   
 
-   t = initTable()
+   t = baseDeDonnee.initTable()
 
    # Ecoute sur le socket
  
@@ -191,7 +191,7 @@ if __name__ == "__main__":
          remplissage(liste)
    
    
-   recherche = rechercheTravail()
+   recherche = baseDeDonnee.rechercheTravail()
    if (len(recherche) == 0):
       iterateur = None
    else:
